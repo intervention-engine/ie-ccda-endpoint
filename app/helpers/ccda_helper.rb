@@ -1,0 +1,2 @@
+module CcdaHelper
+end
