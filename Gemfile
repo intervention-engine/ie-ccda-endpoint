@@ -34,6 +34,9 @@ gem 'responders', '~> 2.0'
 #gem 'health-data-standards', '3.5.0'
 gem 'health-data-standards', git: 'https://github.com/projectcypress/health-data-standards.git', branch: 'bump_as'
 
+gem 'delayed_job_active_record'
+gem 'os'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
