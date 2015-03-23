@@ -15,7 +15,13 @@ class FhirUploadJob < ActiveJob::Base
       upload_executable = "bin/upload-mac"
     end
 
-    `#{upload_executable} -f http://localhost:3001 -s #{json_file.path}`
+    if ENV["IE_PORT_3001_TCP_ADDR"].nil?
+      fhir_server_url = "http://localhost:3001"
+    else
+      fhir_server_url = "http://" + ENV["IE_PORT_3001_TCP_ADDR"] + ":" + ENV["IE_PORT_3001_TCP_PORT"]
+    end
+
+    `#{upload_executable} -f #{fhir_server_url} -s #{json_file.path}`
     json_file.unlink
   end
 end
