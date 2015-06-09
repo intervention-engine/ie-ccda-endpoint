@@ -32,7 +32,7 @@ gem 'responders', '~> 2.0'
 
 # health data standards
 #gem 'health-data-standards', '3.5.0'
-gem 'health-data-standards', git: 'https://github.com/projectcypress/health-data-standards.git', branch: 'bump_as'
+gem 'health-data-standards', git: 'https://github.com/projectcypress/health-data-standards.git', branch: 'description_import'
 
 gem 'delayed_job_active_record'
 gem 'os'
