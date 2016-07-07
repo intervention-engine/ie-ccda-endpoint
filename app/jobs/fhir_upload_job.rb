@@ -21,7 +21,7 @@ class FhirUploadJob < ActiveJob::Base
       fhir_server_url = "http://" + ENV["IE_PORT_3001_TCP_ADDR"] + ":" + ENV["IE_PORT_3001_TCP_PORT"]
     end
 
-    `#{upload_executable} -f #{fhir_server_url} -s #{json_file.path}`
+    `#{upload_executable} -f #{fhir_server_url} -s #{json_file.path} -c`
     json_file.unlink
   end
 end
