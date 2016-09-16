@@ -13,7 +13,7 @@ class CcdaController < ApplicationController
 
     if root_element_name == 'ClinicalDocument'
       if doc.at_xpath("/cda:ClinicalDocument/cda:templateId[@root='2.16.840.1.113883.3.88.11.32.1']")
-          patient_data =  HealthDataStandards::Import::C32::PatientImporter.instance.parse_c32(doc)
+          patient_data = HealthDataStandards::Import::C32::PatientImporter.instance.parse_c32(doc)
       elsif doc.at_xpath("/cda:ClinicalDocument/cda:templateId[@root='2.16.840.1.113883.10.20.22.1.2']")
           # Fix encounter codes that have null code but predictable originalText
           enc_codes = doc.xpath("/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:encounter/cda:code")
@@ -23,6 +23,8 @@ class CcdaController < ApplicationController
             end
           end
           patient_data =  HealthDataStandards::Import::CCDA::PatientImporter.instance.parse_ccda(doc)
+      elsif doc.at_xpath("/cda:ClinicalDocument/cda:templateId[@root='2.16.840.1.113883.10.20.24.1.1']")
+        patient_data = HealthDataStandards::Import::Cat1::PatientImporter.instance.parse_cat1(doc)
       end
     end
 
