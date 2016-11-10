@@ -8,12 +8,6 @@ class FhirUploadJob < ActiveJob::Base
     json_file.write(json)
     json_file.close
     upload_executable = ""
-    if OS.linux?
-      upload_executable = "bin/upload-linux"
-    end
-    if OS.mac?
-      upload_executable = "bin/upload-mac"
-    end
 
     if ENV["FHIR_URL"].nil?
       fhir_server_url = "http://localhost:3001"

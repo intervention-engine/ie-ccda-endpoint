@@ -1,0 +1,4 @@
+log/*.log
+**/*/.DS_Store
+.byebug_history
+.vscode

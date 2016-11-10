@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/projectcypress/health-data-standards.git
-  revision: 04f9468b4dca5786ed0a298cb1f1768d92692104
+  revision: 3e748b0d3e879702a01a300db15c132687730472
   branch: bump_mongoid
   specs:
     health-data-standards (3.6.1)
@@ -15,8 +15,9 @@ GIT
       nokogiri (~> 1.6.7.1)
       protected_attributes (~> 1.0.5)
       rest-client (~> 1.8.0)
-      rubyzip (= 0.9.9)
+      rubyzip (>= 1.0.0)
       uuid (~> 2.3.7)
+      zip-zip
 
 GEM
   remote: https://rubygems.org/
@@ -59,8 +60,9 @@ GEM
     arel (6.0.3)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bson (4.0.0)
+    bson (4.1.1)
     builder (3.2.2)
+    byebug (9.0.5)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -74,7 +76,7 @@ GEM
     delayed_job_active_record (4.1.0)
       activerecord (>= 3.0, < 5)
       delayed_job (>= 3.0, < 5)
-    domain_name (0.5.25)
+    domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.6.0)
@@ -82,7 +84,7 @@ GEM
       activesupport (>= 4.1.0)
     highline (1.7.8)
     hike (1.2.3)
-    http-cookie (1.0.2)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.7.0)
     jbuilder (2.4.0)
@@ -101,11 +103,11 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     memoist (0.9.3)
-    mime-types (2.99)
+    mime-types (2.99.3)
     mini_portile2 (2.0.0)
-    minitest (5.8.3)
-    mongo (2.2.1)
-      bson (~> 4.0)
+    minitest (5.9.1)
+    mongo (2.3.1)
+      bson (~> 4.1)
     mongoid (5.0.2)
       activemodel (~> 4.0)
       mongo (~> 2.1)
@@ -115,9 +117,9 @@ GEM
       mongoid (>= 4.0, < 6.0)
     multi_json (1.11.2)
     netrc (0.11.0)
-    nokogiri (1.6.7.1)
+    nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
-    origin (2.1.1)
+    origin (2.2.2)
     os (0.9.6)
     protected_attributes (1.0.9)
       activemodel (>= 4.0.1, < 5.0)
@@ -157,7 +159,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rubyzip (0.9.9)
+    rubyzip (1.2.0)
     sass (3.2.19)
     sass-rails (4.0.5)
       railties (>= 4.0.0, < 5.0)
@@ -191,7 +193,7 @@ GEM
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.1)
+    unf_ext (0.0.7.2)
     uuid (2.3.8)
       macaddr (~> 1.0)
     web-console (2.2.1)
@@ -199,11 +201,14 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    zip-zip (0.3)
+      rubyzip (>= 1.0.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   coffee-rails (~> 4.0.0)
   delayed_job_active_record
   health-data-standards!
@@ -219,3 +224,6 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+
+BUNDLED WITH
+   1.12.5
