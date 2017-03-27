@@ -27,7 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'web-console', '~> 2.0', group: :development
-
+gem 'byebug', group: [:development, :test]
 gem 'responders', '~> 2.0'
 
 # health data standards
