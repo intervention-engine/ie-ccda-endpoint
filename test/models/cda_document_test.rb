@@ -1,8 +1,9 @@
 require 'test_helper'
+require 'fhir/server'
+require 'cda_document'
 
 class CdaDocumentTest < ActiveSupport::TestCase
-  FHIRServer.stub :upload_to_server, nil do
-
+  FHIR::Server.stub :upload_to_server, nil do
     test 'parse c32' do
       xml = File.read('test/fixtures/c32.xml')
       doc = CdaDocument.build_document(xml)
@@ -22,13 +23,22 @@ class CdaDocumentTest < ActiveSupport::TestCase
       end
     end
 
+    test 'parse cda with duplicate entry' do
+      xml = File.read('test/fixtures/ccda_dup.xml')
+      doc = CdaDocument.build_document(xml).data
+      conditions = doc.conditions.select do |c|
+        c.codes == { 'SNOMED-CT' => ['194828000'] } && c.as_point_in_time == 1_373_414_400
+      end
+
+      assert_equal 1, conditions.size, conditions.map(&:as_point_in_time)
+      assert_not_nil conditions.first.end_time
+    end
+
     test 'parse junk document' do
       xml = File.read('test/fixtures/junk.xml')
       assert_raise CDA::ParsingException do
         CdaDocument.build_document(xml)
       end
     end
-
   end
-
 end

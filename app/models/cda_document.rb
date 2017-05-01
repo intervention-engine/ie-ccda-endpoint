@@ -4,6 +4,9 @@
 module CdaDocument
   cattr_accessor :exec, :url
 
+  COLLECTIONS = [:encounters, :conditions, :vital_signs, :procedures,
+                 :medications, :immunizations, :allergies].freeze
+
   def self.build_document(xml)
     doc = Nokogiri::XML(xml)
     raise CDA::ParsingException, 'Malformed XML' unless doc.root
@@ -21,6 +24,32 @@ module CdaDocument
     target.send :attr_accessor, :errors, :data
   end
 
+  def remove_all_duplicates(document)
+    COLLECTIONS.each do |col|
+      entries = document.send(col)
+      document.send("#{col}=", remove_duplicates(document, entries))
+    end
+    document
+  end
+
+  def remove_duplicates(document, entries)
+    non_dup_entries = {}
+    entries.each do |e|
+      key = [e.as_point_in_time, e.codes].hash
+      existing_entry = non_dup_entries[key]
+      if existing_entry
+        Rails.logger.info("Found existing entry for Patient \
+        MRN##{document.medical_record_number} #{e.type} #{e.cda_identifier.try(:root)}")
+        existing_entry.time ||= e.time
+        existing_entry.start_time ||= e.start_time
+        existing_entry.end_time ||= e.end_time
+      else
+        non_dup_entries[key] = e
+      end
+    end
+    non_dup_entries.values
+  end
+
   def self.get_patient_data(doc)
     if doc.at_xpath("/cda:ClinicalDocument/cda:templateId[@root='2.16.840.1.113883.3.88.11.32.1']")
       C32Document.new(doc)
@@ -28,19 +57,18 @@ module CdaDocument
       CcdaDocument.new(doc)
     end
   end
-
-
 end
 
 module CDA
-  class ParsingException < Exception;end;
+  class ParsingException < RuntimeError; end
 end
 
 # Parse C32 Documents
 class C32Document
   include CdaDocument
   def initialize(doc)
-    self.data = HealthDataStandards::Import::C32::PatientImporter.instance.parse_c32(doc)
+    patient = HealthDataStandards::Import::C32::PatientImporter.instance.parse_c32(doc)
+    self.data = remove_all_duplicates(patient)
   end
 end
 
@@ -56,7 +84,9 @@ class CcdaDocument
         fix_encounter_code(enc_code)
       end
     end
-    self.data = HealthDataStandards::Import::CCDA::PatientImporter.instance.parse_ccda(doc)
+
+    patient = HealthDataStandards::Import::CCDA::PatientImporter.instance.parse_ccda(doc)
+    self.data = remove_all_duplicates(patient)
   end
 
   def fix_encounter_code(enc_code)
