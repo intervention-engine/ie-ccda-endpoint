@@ -36,6 +36,8 @@ gem 'health-data-standards', git: 'https://github.com/projectcypress/health-data
 gem 'delayed_job_active_record'
 gem 'os'
 
+gem 'therubyracer', group: :production
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
