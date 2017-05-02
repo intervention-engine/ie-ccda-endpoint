@@ -3,7 +3,7 @@ require 'fhir/server'
 require 'cda_document'
 
 class CdaDocumentTest < ActiveSupport::TestCase
-  FHIR::Server.stub :upload_to_server, nil do
+
     test 'parse c32' do
       xml = File.read('test/fixtures/c32.xml')
       doc = CdaDocument.build_document(xml)
@@ -40,5 +40,5 @@ class CdaDocumentTest < ActiveSupport::TestCase
         CdaDocument.build_document(xml)
       end
     end
-  end
+
 end

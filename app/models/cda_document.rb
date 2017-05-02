@@ -4,8 +4,8 @@
 module CdaDocument
   cattr_accessor :exec, :url
 
-  COLLECTIONS = [:encounters, :conditions, :vital_signs, :procedures,
-                 :medications, :immunizations, :allergies].freeze
+  COLLECTIONS = %i[encounters conditions vital_signs procedures
+                   medications immunizations allergies].freeze
 
   def self.build_document(xml)
     doc = Nokogiri::XML(xml)

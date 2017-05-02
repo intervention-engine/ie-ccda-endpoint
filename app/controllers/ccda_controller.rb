@@ -1,18 +1,16 @@
 require 'fhir/server'
 
 # CCDA Creation endpoint
-class CcdaController < ActionController::Metal
-  include AbstractController::Rendering
-
+class CcdaController < ApplicationController
   def create
-    document = CdaDocument.new(request.body)
+    document = CdaDocument.build_document(request.body)
 
     upload(document)
 
     @status ||= :ok
     @message ||= 'Document Uploaded'
 
-    render plain: message, status: status
+    render plain: @message, status: @status
   end
 
   private
@@ -21,9 +19,9 @@ class CcdaController < ActionController::Metal
     FHIR::Server.upload(document)
   rescue CDA::ParsingException => e
     @message = e.message
-    @status = :bad_request
+    @status = 400
   rescue RuntimeError => e
     @message = e.message
-    @status = :bad_request
+    @status = 500
   end
 end
