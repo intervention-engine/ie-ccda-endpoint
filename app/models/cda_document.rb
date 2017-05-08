@@ -99,6 +99,8 @@ class CcdaDocument
       insert_code(enc_code, '32485007', text, original_text)
     when 'Observation'
       insert_code(enc_code, '448951000124107', text, original_text)
+    when 'Clinic'
+      insert_code(enc_code, '308335008', text, original_text)
     else
       puts "Cannot infer encounter code from unrecognized originalText: #{original_text}"
     end
