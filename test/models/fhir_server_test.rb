@@ -5,7 +5,7 @@ class FhirServerTest < ActiveSupport::TestCase
     xml = File.read('test/fixtures/ccda.xml')
     doc = CdaDocument.build_document(xml)
     assert_raise RuntimeError do
-      FHIRServer.upload(doc)
+      FHIR::Server.upload(doc)
     end
   end
 end
