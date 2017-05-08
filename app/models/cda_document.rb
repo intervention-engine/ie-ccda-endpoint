@@ -1,4 +1,4 @@
-
+require 'provider_import_utils'
 
 # Subclass for a single CDA-based document such as C32 or CCDA
 module CdaDocument

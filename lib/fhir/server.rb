@@ -1,6 +1,6 @@
 require 'open3'
-# Gateway for FHIR server
 module FHIR
+  # Gateway for FHIR server
   module Server
     ERROR_REGEX = /: (.*?):/
     URL = ENV['FHIR_URL'] || 'http://localhost:3001'
@@ -27,7 +27,8 @@ module FHIR
     def self.upload_to_server(file)
       _, err, status = Open3.capture3("#{EXEC} -f #{URL} -s #{file.path} -c")
 
-      raise ERROR_REGEX.match(err)[1] unless status.success?
+      return if status.success?
+      raise ERROR_REGEX.match(err)[1]
     end
   end
 end
