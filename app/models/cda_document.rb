@@ -39,7 +39,7 @@ module CdaDocument
       existing_entry = non_dup_entries[key]
       if existing_entry
         Rails.logger.info("Found existing entry for Patient \
-        MRN##{document.medical_record_number} #{e.type} #{e.cda_identifier.try(:root)}")
+        MRN##{document.medical_record_number} #{e.class.name} #{e.cda_identifier.try(:root)}")
         existing_entry.time ||= e.time
         existing_entry.start_time ||= e.start_time
         existing_entry.end_time ||= e.end_time
