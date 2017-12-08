@@ -2,6 +2,9 @@ require 'fhir/server'
 
 # CCDA Creation endpoint
 class CcdaController < ApplicationController
+
+  skip_before_action :verify_authenticity_token
+
   def create
     document = CdaDocument.build_document(request.body)
 

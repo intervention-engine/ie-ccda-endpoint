@@ -26,12 +26,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'spring', group: :development
 
 gem 'byebug', group: %i[development test]
-gem 'responders', '~> 2.0'
+gem 'responders'
 gem 'web-console', '~> 2.0', group: :development
 
 # health data standards
-# gem 'health-data-standards', '3.5.0'
-gem 'health-data-standards', git: 'https://github.com/projectcypress/health-data-standards.git', branch: 'bump_mongoid'
+gem 'health-data-standards', '~> 3.7.0'
+# gem 'health-data-standards', git: 'https://github.com/projectcypress/health-data-standards.git', branch: 'bump_mongoid'
 
 gem 'delayed_job_active_record'
 gem 'os'

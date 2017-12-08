@@ -23,12 +23,25 @@ class CdaDocumentTest < ActiveSupport::TestCase
       end
     end
 
-    test 'parse cda with duplicate entry' do
-      xml = File.read('test/fixtures/ccda_dup.xml')
+    # test 'parse cda with exact duplicate entry' do
+    #   xml = File.read('test/fixtures/ccda_dup.xml')
+    #   doc = CdaDocument.build_document(xml).data
+    #   conditions = doc.conditions.select do |c|
+    #     c.codes == { 'SNOMED-CT' => ['194828000'] } && c.as_point_in_time == 1_373_414_400
+    #   end
+    #
+    #   assert_equal 1, conditions.size, conditions.map(&:as_point_in_time)
+    #   assert_not_nil conditions.first.end_time
+    # end
+
+    test 'parse cda with duplicate entry setwise' do
+      xml = File.read('test/fixtures/ccda_dup_setwise.xml')
       doc = CdaDocument.build_document(xml).data
       conditions = doc.conditions.select do |c|
         c.codes == { 'SNOMED-CT' => ['194828000'] } && c.as_point_in_time == 1_373_414_400
       end
+
+      # byebug
 
       assert_equal 1, conditions.size, conditions.map(&:as_point_in_time)
       assert_not_nil conditions.first.end_time
