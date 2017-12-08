@@ -34,10 +34,16 @@ module CdaDocument
 
   def remove_duplicates(document, entries)
     non_dup_entries = {}
+
     entries.each do |e|
-      key = [e.as_point_in_time, e.codes].hash
-      existing_entry = non_dup_entries[key]
+      existing_entry = nil
+      key = e.as_point_in_time
+      possible_entry = non_dup_entries[key]
+
+      existing_entry = possible_entry if possible_entry && !(get_codes(possible_entry) & get_codes(e)).empty?
+
       if existing_entry
+
         Rails.logger.info("Found existing entry for Patient \
         MRN##{document.medical_record_number} #{e.class.name} #{e.cda_identifier.try(:root)}")
         existing_entry.time ||= e.time
@@ -48,6 +54,10 @@ module CdaDocument
       end
     end
     non_dup_entries.values
+  end
+
+  def get_codes(e)
+    Set.new(e.codes.values.flatten)
   end
 
   def self.get_patient_data(doc)
